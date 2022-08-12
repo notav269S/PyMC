@@ -2,6 +2,7 @@ import os
 import time
 import random
 import webbrowser
+from library import *
 
 url = 'https://youtu.be/dQw4w9WgXcQ'
 
