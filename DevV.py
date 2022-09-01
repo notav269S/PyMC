@@ -269,7 +269,7 @@ while True:
                 havCraftingTable -= 1
                 inv['blazerods'] -= 7
                 inv['enderpearls'] -= 14
-                inv['endereyes'] += 14
+                inv['endereyes'] += 12
             else:
                 print("You need a atleast one crafting table, one log and two iron to make a smithing table.")
                 wait(1);continue
@@ -378,7 +378,7 @@ while True:
                     print("Invalid Input");wait(1);continue
             elif prompt == 'give':
                 if inv['emerald']>=4:
-                    conf = input("Confirmation[Y/N]>>> ")
+                    conf = input("Confirmation[Y/N]>>> ").lower()
                     if conf == 'y':
                         print("Added one diamond")
                         inv['emerald'] -= 4
@@ -524,68 +524,71 @@ while True:
             else:
                 print("You need atleast wood gear to attempt to fight a boss.")
         elif boss == 'd':
-            rng = randint(1,10)
-            print("Going to a Fortress to Get Wither Skulls")
-            wait(1)
-            print("The chances of beating the wither are based on your gear. Diamond gear has certainity of defeating it.")
-            if stoMinable:
-                print("It is certain that you will die. Are you sure you want to continue?")
-                conf = input("[Y/N]>>> ").lower()
-                if conf == 'y':
-                    loading("Fighting The Dragon", 3)
-                    print("You Died")
-                    quit()
-                else:
-                    continue
-            elif iroMinable:
-                print("It is certain that you will die. Are you sure you want to continue?")
-                conf = input("[Y/N]>>> ").lower()
-                if conf == 'y':
-                    loading("Fighting The Dragon", 3)
-                    print("You Died")
-                    quit()
-                else:
-                    continue
-            elif dimMinable:
-                print("The chances of you dying are extremely high. Are you sure you want to continue?")
-                conf = input("[Y/N]>>> ").lower()
-                if conf == 'y':
-                    loading("Fighting The Dragon", 3)
-                    if rng <= 1:
-                        print("You defeated the dragon!")
-                        dragDef = True
-                    else:
+            if inv['endereyes'] >= 12:
+                rng = randint(1,10)
+                print("Going to a Fortress to Get Wither Skulls")
+                wait(1)
+                print("The chances of beating the wither are based on your gear. Diamond gear has certainity of defeating it.")
+                if stoMinable:
+                    print("It is certain that you will die. Are you sure you want to continue?")
+                    conf = input("[Y/N]>>> ").lower()
+                    if conf == 'y':
+                        loading("Fighting The Dragon", 3)
                         print("You Died")
                         quit()
-                else:
-                    continue
-            elif netMinable:
-                print("There is a possibility that you will die. Are you sure you want to continue?")
-                conf = input("[Y/N]>>> ").lower()
-                if conf == 'y':
-                    loading("Fighting The Dragon", 3)
-                    if rng <= 6:
-                        print("You defeated the dragon!")
-                        dragDef = True
                     else:
+                        continue
+                elif iroMinable:
+                    print("It is certain that you will die. Are you sure you want to continue?")
+                    conf = input("[Y/N]>>> ").lower()
+                    if conf == 'y':
+                        loading("Fighting The Dragon", 3)
                         print("You Died")
                         quit()
-                else:
-                    continue
-            elif maxed:
-                print("There is a possibility that you will die. Are you sure you want to continue?")
-                conf = input("[Y/N]>>> ").lower()
-                if conf == 'y':
-                    loading("Fighting The Dragon", 3)
-                    if rng <= 8:
-                        print("You defeated the dragon!")
-                        dragDef = True
                     else:
-                        print("You Died")
-                        quit()
+                        continue
+                elif dimMinable:
+                    print("The chances of you dying are extremely high. Are you sure you want to continue?")
+                    conf = input("[Y/N]>>> ").lower()
+                    if conf == 'y':
+                        loading("Fighting The Dragon", 3)
+                        if rng <= 1:
+                            print("You defeated the dragon!")
+                            dragDef = True
+                        else:
+                            print("You Died")
+                            quit()
+                    else:
+                        continue
+                elif netMinable:
+                    print("There is a possibility that you will die. Are you sure you want to continue?")
+                    conf = input("[Y/N]>>> ").lower()
+                    if conf == 'y':
+                        loading("Fighting The Dragon", 3)
+                        if rng <= 6:
+                            print("You defeated the dragon!")
+                            dragDef = True
+                        else:
+                            print("You Died")
+                            quit()
+                    else:
+                        continue
+                elif maxed:
+                    print("There is a possibility that you will die. Are you sure you want to continue?")
+                    conf = input("[Y/N]>>> ").lower()
+                    if conf == 'y':
+                        loading("Fighting The Dragon", 3)
+                        if rng <= 8:
+                            print("You defeated the dragon!")
+                            dragDef = True
+                        else:
+                            print("You Died")
+                            quit()
+                    else:
+                        continue
                 else:
-                    continue
+                    print("You need atleast wood gear to fight a boss.")
             else:
-                print("You need atleast wood gear to fight a boss.")
+                print("You need atleast 12 ender eyes to fight the dragon.")
     else:
         print("Invalid Input");wait(2);continue
