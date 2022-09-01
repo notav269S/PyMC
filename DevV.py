@@ -115,7 +115,7 @@ while True:
                 print("You cannot get gravel in this biome.")
                 wait(2)
                 continue
-        elif thing == 'sabd':
+        elif thing == 'sand':
             if biome == 'Desert':
                 loading("Breaking Sand", sandspeed)
                 inv['sand'] = inv[f'sand']+1
@@ -184,6 +184,7 @@ while True:
             if stoMinable:
                 loading('Mining Stone', 2)
                 inv['stone'] = inv['stone']+4
+                print(f"Obtained {inv['stone']} stone")
             else:
                 print("You can't mine stone yet. Make some wood gear first.")
                 wait(2)
@@ -197,6 +198,7 @@ while True:
                 loading("Making A Crafting Table", 1)
                 havCraftingTable += 1
                 inv['log'] -= 1
+                print(f"You have {havCraftingTable} crafting tables.")
             else:
                 print('You cannot make a crafting table. You need atleast 1 log')
                 wait(2)
