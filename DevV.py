@@ -49,7 +49,7 @@ dimMinable = False
 ironMinable = False
 stoMinable = False
 netMinable = False
-inNether = True
+inNether = False
 
 woodtype = ''
 
@@ -65,7 +65,8 @@ inv = {
     'flintnsteel':0,
     'blazerods': 0,
     'enderpearls':0,
-    'endereyes':0
+    'endereyes':0,
+    'sand':0
 }
 
 woodspeed = 5
@@ -112,6 +113,17 @@ while True:
                 clearConsole()
             else: 
                 print("You cannot get gravel in this biome.")
+                wait(2)
+                continue
+        elif thing == 'sabd':
+            if biome == 'Desert':
+                loading("Breaking Sand", sandspeed)
+                inv['sand'] = inv[f'sand']+1
+                print(f"You got {inv[f'sand']} sand.")
+                wait(2)
+                clearConsole()
+            else: 
+                print("You cannot get sand in this biome.")
                 wait(2)
                 continue
         elif thing == 'iron':
@@ -338,18 +350,43 @@ while True:
                     print("You got out of there"); wait(1); continue
     elif cmd == 't':
         if vilFound:
-            print("Villagers will trade you one diamond for 4 emeralds.")
-            prompt = input("[Y/N]>>> ").lower()
-            if prompt == "y":
-                if inv['emerald'] > 4:
-                    print('Added one diamond.')
-                    inv['diamond'] = inv['diamond']+1
-                    inv['emerald'] = inv['emerald']-4
-                    wait(1)
+            print("Villagers will trade you one diamond for 4 emeralds or 16 gravel/sand for 1 emerald.")
+            prompt = input("[Get/Give(Emeralds)]>>> ").lower()
+            if prompt == "get":
+                prompted = input("[Sand/Gravel]>>> ").lower()
+                if prompted == 'sand':
+                    if inv['sand'] >= 16:
+                        print('Added one emerald.')
+                        inv['emerald'] = inv['emerald']+1
+                        inv['sand'] = inv['sand']-16
+                        wait(1)
+                    else:
+                        print("You cannot buy emeralds as you don't have enough sand.")
+                        wait(2)
+                        continue
+                elif prompted == 'gravel':
+                    if inv['gravel'] >= 16:
+                        print('Added one emerald.')
+                        inv['emerald'] = inv['emerald']+1
+                        inv['gravel'] = inv['gravel']-16
+                        wait(1)
+                    else:
+                        print("You cannot buy emeralds as you don't have enough gravel.")
+                        wait(2)
+                        continue
                 else:
-                    print("You cannot buy diamonds as you don't have enough emeralds.")
-                    wait(2)
-                    continue
+                    print("Invalid Input");wait(1);continue
+            elif prompt == 'give':
+                if inv['emerald']>=4:
+                    conf = input("Confirmation[Y/N]>>> ")
+                    if conf == 'y':
+                        print("Added one diamond")
+                        inv['emerald'] -= 4
+                        inv["diamond"] += 1
+                    elif conf == 'n':
+                        print("Not Traded"); wait(1); continue
+                    else:
+                        continue
             else:
                 continue
         else:
@@ -357,7 +394,7 @@ while True:
             wait(2)
             continue
     elif cmd == 'i':
-        print(f"Crafting Tables: {havCraftingTable}\nSmithing Tables: {havSmithingTable}\n\nLogs: {inv['log']}\nGravel: {inv['gravel']}\n\nEmeralds: {inv['emerald']}\nDiamonds: {inv['diamond']}\nIron: {inv['iron']}\nStone: {inv['stone']}\nNetherite: {inv['netherite']}\n\nFlint: {inv['flint']}\nFlint and Steel: {inv['flintnsteel']}\nBlaze Rods: {inv['blazerods']}\nEnder Pearls: {inv['enderpearls']}\n Eyes of Ender: {inv['endereyes']}\n")
+        print(f"Crafting Tables: {havCraftingTable}\nSmithing Tables: {havSmithingTable}\n\nLogs: {inv['log']}\nGravel: {inv['gravel']}\n\nEmeralds: {inv['emerald']}\nDiamonds: {inv['diamond']}\nIron: {inv['iron']}\nStone: {inv['stone']}\nNetherite: {inv['netherite']}\n\nFlint: {inv['flint']}\nFlint and Steel: {inv['flintnsteel']}\nBlaze Rods: {inv['blazerods']}\nEnder Pearls: {inv['enderpearls']}\nEyes of Ender: {inv['endereyes']}\n")
         if stoMinable:
             val = 'Stone'
         elif ironMinable:
