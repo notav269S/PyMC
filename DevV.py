@@ -10,24 +10,24 @@ def clearConsole():
     system('clear')
 def wait(dur):
     sleep(dur)
-def loading(msg='null', dur=1, speed=0.5):
+def loading(msg='null', dur=1):
     if msg == 'null':
         clearConsole()
         print("No message specified.")
         wait(2)
         clearConsole()
     else:
-        for i in range(0, dur*3):
+        for i in range(0, dur):
             i = i
             clearConsole()
             print(f"{msg}.")
-            wait(speed/3)
+            wait(1/3)
             clearConsole()
             print(f"{msg}..")
-            wait(speed/3)
+            wait(1/3)
             clearConsole()
             print(f"{msg}...")
-            wait(speed/3)
+            wait(1/3)
             clearConsole()
 
 clearConsole()
