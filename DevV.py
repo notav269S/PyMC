@@ -96,10 +96,17 @@ biomes = ['Plains','Desert','Taiga','Savana','Birch Forest','Jungle','Snowy Plai
 
 biome = choice(biomes)
 
+global maxed, vilFound, havCraftingTable, havSmithingTable, dimMinable, ironMinable, stoMinable, netMinable, inNether
+
 maxed, vilFound, havCraftingTable, havSmithingTable, dimMinable, ironMinable, stoMinable, netMinable, inNether = False, False, 0, 0, False, False, False, False, False
 
+def invInp():
+    print("Invalid Input"); wait(2);pass
+
 class Resource:
-    def wood():
+    def __init__(self):
+        pass
+    def wood(self):
         if biome != 'Desert':
             loading("Breaking Wood Nearby", 5)
             inv[f'log'] = inv[f'log']+4
@@ -110,7 +117,7 @@ class Resource:
             print("You cannot get wood in this biome.")
             wait(2)
             pass
-    def gravel():   
+    def gravel(self):   
         if biome != 'Desert' or biome != 'Jungle' or biome != 'Savana':
             loading("Breaking Gravel", 1)
             inv['gravel'] = inv[f'gravel']+1
@@ -128,124 +135,219 @@ class Resource:
             print("You cannot get gravel in this biome.")
             wait(2)
             pass    
+    def iron(self):
+        if ironMinable:
+            loading("Searching for a cave", 5)
+            rnum = randint(0,5)
+            if rnum == 1:
+                print("You found a cave with iron.")
+                loading("Mining Iron", 2)
+                inv['iron'] = inv['iron']+4
+            else:
+                print("You didn't find a cave.")
+                wait(2)
+                pass
+        else:
+            print("You can't mine iron yet. Get some stone gear.")
+            wait(2);pass
+    def sand(self):
+        if biome == 'Desert':
+            loading("Breaking Sand", 1)
+            inv['sand'] = inv[f'sand']+1
+            print(f"You got {inv[f'sand']} sand.")
+            wait(2)
+            clearConsole()
+        else: 
+            print("You cannot get sand in this biome.")
+            wait(2)                
+            pass
+    def diamond(self):
+        if dimMinable:
+            loading("Searching for a cave", 5)
+            rnum = randint(0,20)
+            if rnum <= 3:
+                print("You found a cave which goes down to diamonds.")
+                loading("Mining Diamonds", 10)
+                inv['diamond'] = inv['diamond']+2
+            else:
+                print("You didn't find a cave which leads to diamonds.")
+                wait(2)
+                pass
+        else:
+            print("You cannot get diamonds. Get iron gear first.")
+            wait(2)
+            pass
+    def gold(self):
+        if dimMinable:
+            loading("Searching for a cave", 5)
+            rnum = randint(0,20)
+            if rnum <= 6:
+                print("You found a cave which goes down to gold.")
+                loading("Mining Gold", 10)
+                inv['gold'] = inv['gold']+2
+            else:
+                print("You didn't find a cave which leads to gold.")
+                wait(2)
+                pass
+        else:
+            print("You cannot mine gold. Get iron gear first.")
+            wait(2)
+            pass
+    def netherite(self):
+        if netMinable:
+            if inNether:
+                loading("Searching for a cave", 5)
+                rnum = randint(0,20)
+                if rnum <= 3:
+                    print("You found a cave which goes down to diamonds.")
+                    loading("Mining Ancient Debris", 15)
+                    loading('Mining Gold to Get Netherite', 3)
+                    inv['netherite'] = inv['netherite']+1
+                else:
+                    print('No cave found with netherite.')
+                    wait(2)
+                    pass
+            else:
+                print("You need to get to the nether first.")
+                wait(2)
+                pass
+        else:
+            print("You cannot get netherite. Get diamond gear first.")
+            wait(2)
+            pass
+    def stone(self):
+        if stoMinable:
+            loading('Mining Stone', 2)
+            inv['stone'] = inv['stone']+4
+            print(f"Obtained {inv['stone']} stone")
+            wait(1)
+        else:
+            print("You can't mine stone yet. Make some wood gear first.")
+            wait(2)
+            pass
+
+class Craft:
+    def __init__(self):
+        pass
 
 class Commands:
-    def resource():
+    def __init__(self):
+        pass
+    def resource(self):
         r = Resource()
         thing = input(f"[Wood, Sand, Gravel, Stone, Iron, Gold, Diamond, Netherite]>>> ").lower()
         clearConsole()
         if thing == 'wood':
             r.wood()
         elif thing == 'gravel':
-            if biome != 'Desert' or biome != 'Jungle' or biome != 'Savana':
-                loading("Breaking Gravel", 1)
-                inv['gravel'] = inv[f'gravel']+1
-                print(f"You got {inv[f'gravel']} gravel.")
-                wait(2)
-                print("Would you like to convert it to flint?")
-                fl = input("[Y/N]>>> ").lower()
-                if fl == 'y':
-                    print("Converted")
-                    wait(2)
-                inv['gravel'] -= 1
-                inv['flint'] += 1
-                clearConsole()
-            else: 
-                print("You cannot get gravel in this biome.")
-                wait(2)
-                pass
+            r.gravel()
         elif thing == 'sand':
-            if biome == 'Desert':
-                loading("Breaking Sand", 1)
-                inv['sand'] = inv[f'sand']+1
-                print(f"You got {inv[f'sand']} sand.")
-                wait(2)
-                clearConsole()
-            else: 
-                print("You cannot get sand in this biome.")
-                wait(2)
-                pass
+            r.sand()
         elif thing == 'iron':
-            if ironMinable:
-                loading("Searching for a cave", 5)
-                rnum = randint(0,5)
-                if rnum == 1:
-                    print("You found a cave with iron.")
-                    loading("Mining Iron", 2)
-                    inv['iron'] = inv['iron']+4
-                else:
-                    print("You didn't find a cave.")
-                    wait(2)
-                    pass
-            else:
-                print("You can't mine iron yet. Get some stone gear.")
-                wait(2)
-                pass
+            r.iron()
         elif thing == 'diamond':
-            if dimMinable:
-                loading("Searching for a cave", 5)
-                rnum = randint(0,20)
-                if rnum <= 3:
-                    print("You found a cave which goes down to diamonds.")
-                    loading("Mining Diamonds", 10)
-                    inv['diamond'] = inv['diamond']+2
-                else:
-                    print("You didn't find a cave which leads to diamonds.")
-                    wait(2)
-                    pass
-            else:
-                print("You cannot get diamonds. Get iron gear first.")
-                wait(2)
-                pass
+            r.diamond()
         elif thing == 'gold':
-            if dimMinable:
-                loading("Searching for a cave", 5)
-                rnum = randint(0,20)
-                if rnum <= 6:
-                    print("You found a cave which goes down to gold.")
-                    loading("Mining Gold", 10)
-                    inv['gold'] = inv['gold']+2
-                else:
-                    print("You didn't find a cave which leads to gold.")
-                    wait(2)
-                    pass
-            else:
-                print("You cannot mine gold. Get iron gear first.")
-                wait(2)
-                pass
+            r.gold()
         elif thing == 'netherite':
-            if netMinable:
-                if inNether:
-                    loading("Searching for a cave", 5)
-                    rnum = randint(0,20)
-                    if rnum <= 3:
-                        print("You found a cave which goes down to diamonds.")
-                        loading("Mining Ancient Debris", 15)
-                        loading('Mining Gold to Get Netherite', 3)
-                        inv['netherite'] = inv['netherite']+1
-                    else:
-                        print('No cave found with netherite.')
-                        wait(2)
-                        pass
-                else:
-                    print("You need to get to the nether first.")
-                    wait(2)
-                    pass
-            else:
-                print("You cannot get netherite. Get diamond gear first.")
-                wait(2)
-                pass
+            r.netherite()
         elif thing == 'stone':
-            if stoMinable:
-                loading('Mining Stone', 2)
-                inv['stone'] = inv['stone']+4
-                print(f"Obtained {inv['stone']} stone")
+            r.stone()
+        else:
+            invInp()
+    def craft(self):
+        global maxed, vilFound, havCraftingTable, havSmithingTable, dimMinable, ironMinable, stoMinable, netMinable, inNether
+        stoMinable = True
+        craft = input(f"[Crafting Table, Smithing Table, Flint and Steel, Wood gear, Stone gear, Iron gear, Diamond gear, Netherite gear, Ender Eyes]>>> ").lower()
+        if craft == 'crafting table':
+            if inv['log'] >= 1:
+                loading("Making A Crafting Table", 1)
+                havCraftingTable += 1
+                inv['log'] -= 1
+                print(f"You have {havCraftingTable} crafting tables.")
             else:
-                print("You can't mine stone yet. Make some wood gear first.")
+                print('You cannot make a crafting table. You need atleast 1 log')
                 wait(2)
                 pass
+        elif craft == 'wood gear':
+            if inv['log'] >= 4 and havCraftingTable > 0:
+                loading("Making Wood gear", 2)
+                stoMinable = True
+                inv['log']-=4
+                havCraftingTable -= 1
+            else:
+                print("You need 4 logs and a crafting table to make wood gear.")
+                wait(1)
+                pass
+        elif craft == 'stone gear':
+            if inv['stone'] >= 16 and havCraftingTable > 0:
+                loading("Making Stone gear", 5)
+                ironMinable = True
+                stoMinable = False
+                inv['stone']-=16
+                havCraftingTable -= 1
+            else:
+                print("You need 16 stone and a crafting table to make wood gear.")
+                wait(1);pass
+        elif craft == 'iron gear':
+            if inv['iron'] >= 16 and havCraftingTable > 0:
+                loading("Making Iron gear", 2)
+                iroMinable = False
+                dimMinable = True
+                inv['iron'] -= 16
+                havCraftingTable -= 1
+            else:
+                print("You need 16 iron and a crafting table to make iron gear.")
+                wait(1)
+                pass
+        elif craft == 'diamond gear':
+            if inv['diamond'] >= 16 and havCraftingTable > 0:
+                loading("Making Diamond gear", 2)
+                netMinable = True
+                dimMinable = False
+                inv['diamond']-=16
+                havCraftingTable -= 1
+            else:
+                print("You need 16 diamonds and a crafting table to make diamond gear.")
+                wait(1);pass
+        elif craft == 'netherite gear':
+            if inv['netherite'] >= 5 and havSmithingTable > 0:
+                loading("Making Netherite gear", 2)
+                maxed = True
+                havSmithingTable -= 1
+                inv['netherite'] -= 5
+                print("You have the best gear in the game now")
+            else:
+                print("You need 5 netherite and a crafting table to make netherite gear.")
+                wait(1);pass
+        elif craft == 'smithing table':
+            if inv['log']>0 and inv['iron']>1 and havCraftingTable>0:
+                loading("Crafting Smithing Table", 2)
+                havCraftingTable -= 1
+                inv['iron'] -= 2
+                inv['log'] -= 1
+                havSmithingTable +=1
+            else:
+                print("You need a atleast one crafting table, one log and two iron to make a smithing table.")
+                wait(1);pass
+        elif craft == 'ender eyes':
+            if inv['blazerods']>=7 and inv['enderpearls']>=14 and havCraftingTable>0:
+                loading("Crafting Ender Eyes", 2)
+                havCraftingTable -= 1
+                inv['blazerods'] -= 7
+                inv['enderpearls'] -= 14
+                inv['endereyes'] += 12
+            else:
+                print("You need a atleast one crafting table, one log and two iron to make a smithing table.")
+                wait(1);pass
+        elif craft == 'flint and steel':
+            if inv['flint']>0 and inv['iron']>0:
+                loading("Crafting Flint and Steel", 2)
+                inv['flint'] -= 1
+                inv['iron'] -= 1
+                inv['flintnsteel'] += 1
         else:
-            print("Invalid Input"); wait(2);pass
+            print("Invalid Input");wait(2);pass
 
 inv = {
     'log':0,
@@ -274,7 +376,7 @@ cmds = Commands()
 
 while True:
     clearConsole()
-    print("Commands:\nR - Gather Resources\nE - Explore\nC - Craft\nI - Check Inventory\nT - Trade\nN - Go To Nether\nA - Advancement List\nF - Fight\nS - Save and Quit\nL - Load Save")
+    print("Commands:\nR - Gather Resources\nE - Explore\nC - Craft\nI - Check Inventory\nT - Trade\nN - Go To Nether\nA - Advancement List\nF - Fight\nS - Save and Quit\nL - Load Save\n")
     cmd = input(f"[{biome} | CMD]>>> ").lower()
     clearConsole()
     if cmd == 'r':
