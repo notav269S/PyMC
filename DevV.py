@@ -2,9 +2,7 @@ from os import system
 from time import sleep
 from random import randint, choice
 
-guardDef = False
-witDef = False
-dragDef = False
+guardDef, witDef, dragDrf = False, False, False
 
 def clearConsole():
     system('clear')
@@ -34,27 +32,11 @@ def loading(msg='null', dur=1):
 
 clearConsole()
 
-biomes = ['Plains','Desert','Taiga',
-'Savana','Birch Forest','Jungle',
-'Snowy Plains','Dark Oak Forest','Swamp',
-'Extreme Hills']
+biomes = ['Plains','Desert','Taiga','Savana','Birch Forest','Jungle','Snowy Plains','Dark Oak Forest','Swamp','Extreme Hills']
 
 biome = choice(biomes)
 
-maxed = False
-
-vilFound = False
-
-havCraftingTable = 0
-havSmithingTable = 0
-
-dimMinable = False
-ironMinable = False
-stoMinable = False
-netMinable = False
-inNether = False
-
-woodtype = ''
+maxed, vilFound, havCraftingTable, havSmithingTable, dimMinable, ironMinable, stoMinable, netMinable, inNether = False, False, 0, 0, False, False, False, False, False
 
 inv = {
     'log':0,
