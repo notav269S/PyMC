@@ -38,8 +38,6 @@ biome = choice(biomes)
 
 maxed = False
 
-stoSpeed = 5
-
 vilFound = False
 
 havCraftingTable = 0
@@ -70,9 +68,6 @@ inv = {
     'gold':0
 }
 
-woodspeed = 5
-sandspeed = 1
-
 print("Note: Caps DON'T Matter")
 wait(0.5)
 
@@ -81,7 +76,7 @@ if inNether:
 
 while True:
     clearConsole()
-    print("Commands:\nR - Gather Resources\nE - Explore\nC - Craft\nI - Check Inventory\nT - Trade\nN - Go To Nether\nA - Advancement List\nF - Fight\n")
+    print("Commands:\nR - Gather Resources\nE - Explore\nC - Craft\nI - Check Inventory\nT - Trade\nN - Go To Nether\nA - Advancement List\nF - Fight\nS - Save and Quit\nL - Load Save")
     cmd = input(f"[{biome} | CMD]>>> ").lower()
     clearConsole()
     if cmd == 'r':
@@ -89,7 +84,7 @@ while True:
         clearConsole()
         if thing == 'wood':
             if biome != 'Desert':
-                loading("Breaking Wood Nearby", woodspeed)
+                loading("Breaking Wood Nearby", 5)
                 inv[f'log'] = inv[f'log']+4
                 print(f"You got {inv[f'log']} logs.")
                 wait(2)
@@ -100,7 +95,7 @@ while True:
                 continue
         elif thing == 'gravel':
             if biome != 'Desert' or biome != 'Jungle' or biome != 'Savana':
-                loading("Breaking Gravel", sandspeed)
+                loading("Breaking Gravel", 1)
                 inv['gravel'] = inv[f'gravel']+1
                 print(f"You got {inv[f'gravel']} gravel.")
                 wait(2)
@@ -616,5 +611,38 @@ while True:
                     print("You need atleast wood gear to fight a boss.")
             else:
                 print("You need atleast 12 ender eyes to fight the dragon.")
+    elif cmd == 's':
+        savename = input("[Save Name]>>> ").lower()
+        with open(f'{savename}.txt', 'a') as f:
+            with open(f'/saves/{savename}.txt', 'w') as j:
+                j.write(f"{inv['log']}\n{inv['gravel']}\n{inv['emerald']}\n{inv['diamond']}\n{inv['iron']}\n{inv['stone']}\n{inv['netherite']}\n{inv['flint']}\n{inv['flintnsteel']}\n{inv['blazerods']}\n{inv['enderpearls']}\n{inv['endereyes']}\n{inv['sand']}\n{inv['gold']}\n{biome}\n{maxed}\n{vilFound}\n{havCraftingTable}\n{havSmithingTable}\n{dimMinable}\n{ironMinable}\n{stoMinable}\n{netMinable}\n{inNether}")
+    elif cmd == 'l':
+        savename = input("[Save Name]>>> ").lower()
+        with open(f'{savename}.txt', 'r') as f:
+            content = f.read()
+            inv['log'] = content.split('\n', 1)[0]
+            inv['gravel'] = content.split('\n', 1)[1]
+            inv['emerald'] = content.split('\n', 1)[2]
+            inv['diamond'] = content.split('\n', 1)[3]
+            inv['iron'] = content.split('\n', 1)[4]
+            inv['stone'] = content.split('\n', 1)[5]
+            inv['netherite'] = content.split('\n', 1)[6]
+            inv['flint'] = content.split('\n', 1)[7]
+            inv['flintnsteel'] = content.split('\n', 1)[8]
+            inv['blazerods'] = content.split('\n', 1)[9]
+            inv['enderpearls'] = content.split('\n', 1)[10]
+            inv['endereyes'] = content.split('\n', 1)[11]
+            inv['sand'] = content.split('\n', 1)[12]
+            inv['gold'] = content.split('\n', 1)[13]
+            biome = content.split('\n', 1)[14]
+            maxed = content.split('\n', 1)[15]
+            vilFound = content.split('\n', 1)[16]
+            havCraftingTable = content.split('\n', 1)[17]
+            havSmithingTable = content.split('\n', 1)[18]
+            dimMinable = content.split('\n', 1)[19]
+            ironMinable = content.split('\n', 1)[20]
+            stoMinable = content.split('\n', 1)[21]
+            netMinable = content.split('\n', 1)[22]
+            inNether = content.split('\n', 1)[23]
     else:
         print("Invalid Input");wait(2);continue
