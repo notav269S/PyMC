@@ -301,20 +301,27 @@ while True:
         else:
             print("Invalid Input");wait(2);continue
     elif cmd == 'n':
-        if netMinable and inv['flintnsteel']>0:
-            loading("Searching For Lava", 5)
-            rnd = randint(1,10)
-            if rnd <= 5:
-                print("Found Lava")
-                loading("Making Portal", 3)
-                inNether = True
-                biome = 'Nether Wastes'
-            else:
-                print("Didn't Find Lava")
-                wait(1); continue
+        if inNether:
+            print("Going to Overworld.")
+            wait(1)
+            inNether = False
+            continue
+            biome = choice(biomes)
         else:
-            print("You need diamond gear to go to the nether")
-            wait(2); continue
+            if netMinable and inv['flintnsteel']>0:
+                loading("Searching For Lava", 5)
+                rnd = randint(1,10)
+                if rnd <= 5:
+                    print("Found Lava")
+                    loading("Making Portal", 3)
+                    inNether = True
+                    biome = 'Nether Wastes'
+                else:
+                    print("Didn't Find Lava")
+                    wait(1); continue
+            else:
+                print("You need diamond gear to go to the nether")
+                wait(2); continue
     elif cmd == 'e':
         loading("Exploring around", 5) 
         rnum = randint(0, 30)
