@@ -32,31 +32,65 @@ def loading(msg='null', dur=1):
 
 clearConsole()
 
-class Hunger:
+class Health:
     def __init__(self):
-         hunger = 20
-    
-    def getHunger(self):
-        return self.hunger
-    
-    def changeHunger(num,self):
-        return self.hunger + num
-
-    def check(self):
-        if self.hunger > 20:
+        self.health = 20
+        self.saturation = 0
+    def getHealth(self):
+        return self.health
+    def changeHealth(num,self):
+        return self.health + num
+    def isDead(self):
+        if self.health == 0:
+            print('You Died.')
+            quit()
+    def kill(self):
+        print('You Died.')
+        quit()
+    def verify(self):
+        if self.health > 20:
+            self.health = 20
             return False
-        elif self.hunger < 0:
+        elif self.health < 0:
+            self.health = 0
             return False
         else:
             return True
-    
+
+health = Health()
+
+class Hunger:
+    def __init__(self):
+        self.hunger = 20
+        self.saturation = 0
+        if self.hunger == 20:
+            self.hunger -= 4
+            health.changeHealth(4)
+            health.verify()
+            self.verify()
+    def getHunger(self):
+        return self.hunger
+    def changeHunger(num,self):
+        return self.hunger + num
+    def getSaturation(self):
+        return self.saturation
+    def changeSaturation(num,self):
+        return self.saturation + num
+    def ifDead():
+        if hunger == 0:
+            while True:
+                health.changeHealth(-1)   
     def verify(self):
         if self.hunger > 20:
+            return False
             self.hunger = 20
         elif self.hunger < 0:
+            return False
             self.hunger = 0
         else:
             return True
+
+hunger = Hunger
 
 biomes = ['Plains','Desert','Taiga','Savana','Birch Forest','Jungle','Snowy Plains','Dark Oak Forest','Swamp','Extreme Hills']
 
@@ -379,7 +413,7 @@ while True:
                         print("You got 7 blaze rods. That's enough for the dragon.")
                         inv['blazerods'] += 7
                     else:
-                        print("You died"); quit()
+                        health.kill()
                 else:
                     print("You got out of there"); wait(1); continue
     elif cmd == 't':
@@ -469,8 +503,7 @@ while True:
                         print("You defeated the guardian!")
                         guardDef = True
                     else:
-                        print("You Died")
-                        quit()
+                        health.kill()
                 else:
                     continue
             elif iroMinable:
@@ -482,8 +515,7 @@ while True:
                         print("You defeated the guardian!")
                         guardDef = True
                     else:
-                        print("You Died")
-                        quit()
+                        health.kill()
                 else:
                     continue
             elif dimMinable:
@@ -516,8 +548,7 @@ while True:
                 conf = input("[Y/N]>>> ").lower()
                 if conf == 'y':
                     loading("Fighting The Wither", 3)
-                    print("You Died")
-                    quit()
+                    health.kill()
                 else:
                     continue
             elif iroMinable:
@@ -529,8 +560,7 @@ while True:
                         print("You defeated the wither!")
                         witDef = True
                     else:
-                        print("You Died")
-                        quit()
+                        health.kill()
                 else:
                     continue
             elif dimMinable:
@@ -542,8 +572,7 @@ while True:
                         print("You defeated the wither!")
                         witDef = True
                     else:
-                        print("You Died")
-                        quit()
+                        health.kill()
                 else:
                     continue
             elif netMinable:
@@ -568,8 +597,7 @@ while True:
                     conf = input("[Y/N]>>> ").lower()
                     if conf == 'y':
                         loading("Fighting The Dragon", 3)
-                        print("You Died")
-                        quit()
+                        health.kill()
                     else:
                         continue
                 elif iroMinable:
@@ -577,8 +605,7 @@ while True:
                     conf = input("[Y/N]>>> ").lower()
                     if conf == 'y':
                         loading("Fighting The Dragon", 3)
-                        print("You Died")
-                        quit()
+                        health.kill()
                     else:
                         continue
                 elif dimMinable:
@@ -590,8 +617,7 @@ while True:
                             print("You defeated the dragon!")
                             dragDef = True
                         else:
-                            print("You Died")
-                            quit()
+                            health.kill()
                     else:
                         continue
                 elif netMinable:
@@ -603,8 +629,7 @@ while True:
                             print("You defeated the dragon!")
                             dragDef = True
                         else:
-                            print("You Died")
-                            quit()
+                            health.kill()
                     else:
                         continue
                 elif maxed:
@@ -616,8 +641,7 @@ while True:
                             print("You defeated the dragon!")
                             dragDef = True
                         else:
-                            print("You Died")
-                            quit()
+                            health.kill()
                     else:
                         continue
                 else:
