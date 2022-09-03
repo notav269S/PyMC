@@ -113,7 +113,7 @@ while True:
                 continue
         elif thing == 'sand':
             if biome == 'Desert':
-                loading("Breaking Sand", sandspeed)
+                loading("Breaking Sand", 1)
                 inv['sand'] = inv[f'sand']+1
                 print(f"You got {inv[f'sand']} sand.")
                 wait(2)
@@ -228,7 +228,7 @@ while True:
                 continue
         elif craft == 'stone gear':
             if inv['stone'] >= 16 and havCraftingTable > 0:
-                loading("Making Stone gear", stoSpeed)
+                loading("Making Stone gear", 5)
                 ironMinable = True
                 stoMinable = False
                 inv['stone']-=16
