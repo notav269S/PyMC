@@ -8,8 +8,10 @@ dragDef = False
 
 def clearConsole():
     system('clear')
+
 def wait(dur):
     sleep(dur)
+
 def loading(msg='null', dur=1):
     if msg == 'null':
         clearConsole()
@@ -32,7 +34,10 @@ def loading(msg='null', dur=1):
 
 clearConsole()
 
-biomes = ['Plains','Desert','Taiga','Savana','Birch Forest','Jungle','Snowy Plains','Dark Oak Forest','Swamp','Extreme Hills']
+biomes = ['Plains','Desert','Taiga',
+'Savana','Birch Forest','Jungle',
+'Snowy Plains','Dark Oak Forest','Swamp',
+'Extreme Hills']
 
 biome = choice(biomes)
 
