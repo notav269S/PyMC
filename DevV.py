@@ -17,7 +17,7 @@ def loading(msg='null', dur=1, speed=0.5):
         wait(2)
         clearConsole()
     else:
-        for i in range(0, dur*2):
+        for i in range(0, dur*3):
             i = i
             clearConsole()
             print(f"{msg}.")
