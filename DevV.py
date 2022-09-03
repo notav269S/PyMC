@@ -287,8 +287,8 @@ while True:
             print("Going to Overworld.")
             wait(1)
             inNether = False
-            continue
             biome = choice(biomes)
+            continue
         else:
             if netMinable and inv['flintnsteel']>0:
                 loading("Searching For Lava", 5)
