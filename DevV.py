@@ -32,6 +32,32 @@ def loading(msg='null', dur=1):
 
 clearConsole()
 
+class Hunger:
+    def __init__(self):
+         hunger = 20
+    
+    def getHunger(self):
+        return self.hunger
+    
+    def changeHunger(num,self):
+        return self.hunger + num
+
+    def check(self):
+        if self.hunger > 20:
+            return False
+        elif self.hunger < 0:
+            return False
+        else:
+            return True
+    
+    def verify(self):
+        if self.hunger > 20:
+            self.hunger = 20
+        elif self.hunger < 0:
+            self.hunger = 0
+        else:
+            return True
+
 biomes = ['Plains','Desert','Taiga','Savana','Birch Forest','Jungle','Snowy Plains','Dark Oak Forest','Swamp','Extreme Hills']
 
 biome = choice(biomes)
