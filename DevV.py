@@ -66,7 +66,8 @@ inv = {
     'blazerods': 0,
     'enderpearls':0,
     'endereyes':0,
-    'sand':0
+    'sand':0,
+    'gold':0
 }
 
 woodspeed = 5
@@ -84,7 +85,7 @@ while True:
     cmd = input(f"[{biome} | CMD]>>> ").lower()
     clearConsole()
     if cmd == 'r':
-        thing = input(f"[Wood, Sand, Gravel, Stone, Iron, Diamond, Netherite]>>> ").lower()
+        thing = input(f"[Wood, Sand, Gravel, Stone, Iron, Gold, Diamond, Netherite]>>> ").lower()
         clearConsole()
         if thing == 'wood':
             if biome != 'Desert':
@@ -156,6 +157,22 @@ while True:
                     continue
             else:
                 print("You cannot get diamonds. Get iron gear first.")
+                wait(2)
+                continue
+        elif thing == 'gold':
+            if dimMinable:
+                loading("Searching for a cave", 5)
+                rnum = randint(0,20)
+                if rnum <= 6:
+                    print("You found a cave which goes down to gold.")
+                    loading("Mining Gold", 10)
+                    inv['gold'] = inv['gold']+2
+                else:
+                    print("You didn't find a cave which leads to gold.")
+                    wait(2)
+                    continue
+            else:
+                print("You cannot mine gold. Get iron gear first.")
                 wait(2)
                 continue
         elif thing == 'netherite':
@@ -326,15 +343,15 @@ while True:
         else:
             if rnum > 20:
                 print("You found a bastion")
-                print("Would you like to trade iron for ender pearls? You will need them for the Ender Dragon.")
+                print("Would you like to trade gold for ender pearls? You will need them for the Ender Dragon.")
                 conf = input("[Y/N]>>> ").lower()
                 if conf == 'y':
-                    if inv['iron']>=14:
+                    if inv['gold']>=14:
                         print("You got 14 ender pearls. You just need blaze rods to convert them into ender eyes.")
                         inv['enderpearls'] += 7*2
-                        inv['iron'] -= 14
+                        inv['gold'] -= 14
                     else:
-                        print("You don't have enough iron"); wait(1)
+                        print("You don't have enough gold. You need 14."); wait(1)
                         continue
                 else:
                     print("You got out of there"); wait(1); continue
