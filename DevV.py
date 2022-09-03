@@ -98,6 +98,155 @@ biome = choice(biomes)
 
 maxed, vilFound, havCraftingTable, havSmithingTable, dimMinable, ironMinable, stoMinable, netMinable, inNether = False, False, 0, 0, False, False, False, False, False
 
+class Resource:
+    def wood():
+        if biome != 'Desert':
+            loading("Breaking Wood Nearby", 5)
+            inv[f'log'] = inv[f'log']+4
+            print(f"You got {inv[f'log']} logs.")
+            wait(2)
+            clearConsole()
+        else: 
+            print("You cannot get wood in this biome.")
+            wait(2)
+            pass
+    def gravel():   
+        if biome != 'Desert' or biome != 'Jungle' or biome != 'Savana':
+            loading("Breaking Gravel", 1)
+            inv['gravel'] = inv[f'gravel']+1
+            print(f"You got {inv[f'gravel']} gravel.")
+            wait(2)
+            print("Would you like to convert it to flint?")
+            fl = input("[Y/N]>>> ").lower()
+            if fl == 'y':
+                print("Converted")
+                wait(2)
+                inv['gravel'] -= 1
+                inv['flint'] += 1
+                clearConsole()
+        else: 
+            print("You cannot get gravel in this biome.")
+            wait(2)
+            pass    
+
+class Commands:
+    def resource():
+        r = Resource()
+        thing = input(f"[Wood, Sand, Gravel, Stone, Iron, Gold, Diamond, Netherite]>>> ").lower()
+        clearConsole()
+        if thing == 'wood':
+            r.wood()
+        elif thing == 'gravel':
+            if biome != 'Desert' or biome != 'Jungle' or biome != 'Savana':
+                loading("Breaking Gravel", 1)
+                inv['gravel'] = inv[f'gravel']+1
+                print(f"You got {inv[f'gravel']} gravel.")
+                wait(2)
+                print("Would you like to convert it to flint?")
+                fl = input("[Y/N]>>> ").lower()
+                if fl == 'y':
+                    print("Converted")
+                    wait(2)
+                inv['gravel'] -= 1
+                inv['flint'] += 1
+                clearConsole()
+            else: 
+                print("You cannot get gravel in this biome.")
+                wait(2)
+                pass
+        elif thing == 'sand':
+            if biome == 'Desert':
+                loading("Breaking Sand", 1)
+                inv['sand'] = inv[f'sand']+1
+                print(f"You got {inv[f'sand']} sand.")
+                wait(2)
+                clearConsole()
+            else: 
+                print("You cannot get sand in this biome.")
+                wait(2)
+                pass
+        elif thing == 'iron':
+            if ironMinable:
+                loading("Searching for a cave", 5)
+                rnum = randint(0,5)
+                if rnum == 1:
+                    print("You found a cave with iron.")
+                    loading("Mining Iron", 2)
+                    inv['iron'] = inv['iron']+4
+                else:
+                    print("You didn't find a cave.")
+                    wait(2)
+                    pass
+            else:
+                print("You can't mine iron yet. Get some stone gear.")
+                wait(2)
+                pass
+        elif thing == 'diamond':
+            if dimMinable:
+                loading("Searching for a cave", 5)
+                rnum = randint(0,20)
+                if rnum <= 3:
+                    print("You found a cave which goes down to diamonds.")
+                    loading("Mining Diamonds", 10)
+                    inv['diamond'] = inv['diamond']+2
+                else:
+                    print("You didn't find a cave which leads to diamonds.")
+                    wait(2)
+                    pass
+            else:
+                print("You cannot get diamonds. Get iron gear first.")
+                wait(2)
+                pass
+        elif thing == 'gold':
+            if dimMinable:
+                loading("Searching for a cave", 5)
+                rnum = randint(0,20)
+                if rnum <= 6:
+                    print("You found a cave which goes down to gold.")
+                    loading("Mining Gold", 10)
+                    inv['gold'] = inv['gold']+2
+                else:
+                    print("You didn't find a cave which leads to gold.")
+                    wait(2)
+                    pass
+            else:
+                print("You cannot mine gold. Get iron gear first.")
+                wait(2)
+                pass
+        elif thing == 'netherite':
+            if netMinable:
+                if inNether:
+                    loading("Searching for a cave", 5)
+                    rnum = randint(0,20)
+                    if rnum <= 3:
+                        print("You found a cave which goes down to diamonds.")
+                        loading("Mining Ancient Debris", 15)
+                        loading('Mining Gold to Get Netherite', 3)
+                        inv['netherite'] = inv['netherite']+1
+                    else:
+                        print('No cave found with netherite.')
+                        wait(2)
+                        pass
+                else:
+                    print("You need to get to the nether first.")
+                    wait(2)
+                    pass
+            else:
+                print("You cannot get netherite. Get diamond gear first.")
+                wait(2)
+                pass
+        elif thing == 'stone':
+            if stoMinable:
+                loading('Mining Stone', 2)
+                inv['stone'] = inv['stone']+4
+                print(f"Obtained {inv['stone']} stone")
+            else:
+                print("You can't mine stone yet. Make some wood gear first.")
+                wait(2)
+                pass
+        else:
+            print("Invalid Input"); wait(2);pass
+
 inv = {
     'log':0,
     'gravel':0,
@@ -121,135 +270,15 @@ wait(0.5)
 if inNether:
     biome = "Nether Wastes"
 
+cmds = Commands()
+
 while True:
     clearConsole()
     print("Commands:\nR - Gather Resources\nE - Explore\nC - Craft\nI - Check Inventory\nT - Trade\nN - Go To Nether\nA - Advancement List\nF - Fight\nS - Save and Quit\nL - Load Save")
     cmd = input(f"[{biome} | CMD]>>> ").lower()
     clearConsole()
     if cmd == 'r':
-        thing = input(f"[Wood, Sand, Gravel, Stone, Iron, Gold, Diamond, Netherite]>>> ").lower()
-        clearConsole()
-        if thing == 'wood':
-            if biome != 'Desert':
-                loading("Breaking Wood Nearby", 5)
-                inv[f'log'] = inv[f'log']+4
-                print(f"You got {inv[f'log']} logs.")
-                wait(2)
-                clearConsole()
-            else: 
-                print("You cannot get wood in this biome.")
-                wait(2)
-                continue
-        elif thing == 'gravel':
-            if biome != 'Desert' or biome != 'Jungle' or biome != 'Savana':
-                loading("Breaking Gravel", 1)
-                inv['gravel'] = inv[f'gravel']+1
-                print(f"You got {inv[f'gravel']} gravel.")
-                wait(2)
-                print("Would you like to convert it to flint?")
-                fl = input("[Y/N]>>> ").lower()
-                if fl == 'y':
-                    print("Converted")
-                    wait(2)
-                inv['gravel'] -= 1
-                inv['flint'] += 1
-                clearConsole()
-            else: 
-                print("You cannot get gravel in this biome.")
-                wait(2)
-                continue
-        elif thing == 'sand':
-            if biome == 'Desert':
-                loading("Breaking Sand", 1)
-                inv['sand'] = inv[f'sand']+1
-                print(f"You got {inv[f'sand']} sand.")
-                wait(2)
-                clearConsole()
-            else: 
-                print("You cannot get sand in this biome.")
-                wait(2)
-                continue
-        elif thing == 'iron':
-            if ironMinable:
-                loading("Searching for a cave", 5)
-                rnum = randint(0,5)
-                if rnum == 1:
-                    print("You found a cave with iron.")
-                    loading("Mining Iron", 2)
-                    inv['iron'] = inv['iron']+4
-                else:
-                    print("You didn't find a cave.")
-                    wait(2)
-                    continue
-            else:
-                print("You can't mine iron yet. Get some stone gear.")
-                wait(2)
-                continue
-        elif thing == 'diamond':
-            if dimMinable:
-                loading("Searching for a cave", 5)
-                rnum = randint(0,20)
-                if rnum <= 3:
-                    print("You found a cave which goes down to diamonds.")
-                    loading("Mining Diamonds", 10)
-                    inv['diamond'] = inv['diamond']+2
-                else:
-                    print("You didn't find a cave which leads to diamonds.")
-                    wait(2)
-                    continue
-            else:
-                print("You cannot get diamonds. Get iron gear first.")
-                wait(2)
-                continue
-        elif thing == 'gold':
-            if dimMinable:
-                loading("Searching for a cave", 5)
-                rnum = randint(0,20)
-                if rnum <= 6:
-                    print("You found a cave which goes down to gold.")
-                    loading("Mining Gold", 10)
-                    inv['gold'] = inv['gold']+2
-                else:
-                    print("You didn't find a cave which leads to gold.")
-                    wait(2)
-                    continue
-            else:
-                print("You cannot mine gold. Get iron gear first.")
-                wait(2)
-                continue
-        elif thing == 'netherite':
-            if netMinable:
-                if inNether:
-                    loading("Searching for a cave", 5)
-                    rnum = randint(0,20)
-                    if rnum <= 3:
-                        print("You found a cave which goes down to diamonds.")
-                        loading("Mining Ancient Debris", 15)
-                        loading('Mining Gold to Get Netherite', 3)
-                        inv['netherite'] = inv['netherite']+1
-                    else:
-                        print('No cave found with netherite.')
-                        wait(2)
-                        continue
-                else:
-                    print("You need to get to the nether first.")
-                    wait(2)
-                    continue
-            else:
-                print("You cannot get netherite. Get diamond gear first.")
-                wait(2)
-                continue
-        elif thing == 'stone':
-            if stoMinable:
-                loading('Mining Stone', 2)
-                inv['stone'] = inv['stone']+4
-                print(f"Obtained {inv['stone']} stone")
-            else:
-                print("You can't mine stone yet. Make some wood gear first.")
-                wait(2)
-                continue
-        else:
-            print("Invalid Input"); wait(2);continue
+        cmds.resource()
     elif cmd == 'c':
         craft = input(f"[Crafting Table, Smithing Table, Flint and Steel, Wood gear, Stone gear, Iron gear, Diamond gear, Netherite gear, Ender Eyes]>>> ").lower()
         if craft == 'crafting table':
@@ -261,7 +290,7 @@ while True:
             else:
                 print('You cannot make a crafting table. You need atleast 1 log')
                 wait(2)
-                continue
+                pass
         elif craft == 'wood gear':
             if inv['log'] >= 4 and havCraftingTable > 0:
                 loading("Making Wood gear", 2)
@@ -272,7 +301,7 @@ while True:
             else:
                 print("You need 4 logs and a crafting table to make wood gear.")
                 wait(1)
-                continue
+                pass
         elif craft == 'stone gear':
             if inv['stone'] >= 16 and havCraftingTable > 0:
                 loading("Making Stone gear", 5)
@@ -282,7 +311,7 @@ while True:
                 havCraftingTable -= 1
             else:
                 print("You need 16 stone and a crafting table to make wood gear.")
-                wait(1);continue
+                wait(1);pass
         elif craft == 'iron gear':
             if inv['iron'] >= 16 and havCraftingTable > 0:
                 loading("Making Iron gear", 2)
@@ -293,7 +322,7 @@ while True:
             else:
                 print("You need 16 iron and a crafting table to make iron gear.")
                 wait(1)
-                continue
+                pass
         elif craft == 'diamond gear':
             if inv['diamond'] >= 16 and havCraftingTable > 0:
                 loading("Making Diamond gear", 2)
@@ -303,7 +332,7 @@ while True:
                 havCraftingTable -= 1
             else:
                 print("You need 16 diamonds and a crafting table to make diamond gear.")
-                wait(1);continue
+                wait(1);pass
         elif craft == 'netherite gear':
             if inv['netherite'] >= 5 and havSmithingTable > 0:
                 loading("Making Netherite gear", 2)
@@ -313,7 +342,7 @@ while True:
                 print("You have the best gear in the game now")
             else:
                 print("You need 5 netherite and a crafting table to make netherite gear.")
-                wait(1);continue
+                wait(1);pass
         elif craft == 'smithing table':
             if inv['log']>0 and inv['iron']>1 and havCraftingTable>0:
                 loading("Crafting Smithing Table", 2)
@@ -323,7 +352,7 @@ while True:
                 havSmithingTable +=1
             else:
                 print("You need a atleast one crafting table, one log and two iron to make a smithing table.")
-                wait(1);continue
+                wait(1);pass
         elif craft == 'ender eyes':
             if inv['blazerods']>=7 and inv['enderpearls']>=14 and havCraftingTable>0:
                 loading("Crafting Ender Eyes", 2)
@@ -333,7 +362,7 @@ while True:
                 inv['endereyes'] += 12
             else:
                 print("You need a atleast one crafting table, one log and two iron to make a smithing table.")
-                wait(1);continue
+                wait(1);pass
         elif craft == 'flint and steel':
             if inv['flint']>0 and inv['iron']>0:
                 loading("Crafting Flint and Steel", 2)
@@ -341,14 +370,14 @@ while True:
                 inv['iron'] -= 1
                 inv['flintnsteel'] += 1
         else:
-            print("Invalid Input");wait(2);continue
+            print("Invalid Input");wait(2);pass
     elif cmd == 'n':
         if inNether:
             print("Going to Overworld.")
             wait(1)
             inNether = False
             biome = choice(biomes)
-            continue
+            pass
         else:
             if netMinable and inv['flintnsteel']>0:
                 loading("Searching For Lava", 5)
@@ -360,10 +389,10 @@ while True:
                     biome = 'Nether Wastes'
                 else:
                     print("Didn't Find Lava")
-                    wait(1); continue
+                    wait(1); pass
             else:
                 print("You need diamond gear to go to the nether")
-                wait(2); continue
+                wait(2); pass
     elif cmd == 'e':
         loading("Exploring around", 5) 
         rnum = randint(0, 30)
@@ -388,7 +417,7 @@ while True:
                     if inp == "y":
                         vilFound = True
                     else:
-                        continue
+                        pass
         else:
             if rnum > 20:
                 print("You found a bastion")
@@ -401,9 +430,9 @@ while True:
                         inv['gold'] -= 14
                     else:
                         print("You don't have enough gold. You need 14."); wait(1)
-                        continue
+                        pass
                 else:
-                    print("You got out of there"); wait(1); continue
+                    print("You got out of there"); wait(1); pass
             elif rnum > 15 and rnum <= 20:
                 print("You found a fortress")
                 print("Would you like to kill the blazes? Note: You will die and will have to start over if you don't have diamond gear yet(i.e. Netherite Mining Level).")
@@ -415,7 +444,7 @@ while True:
                     else:
                         health.kill()
                 else:
-                    print("You got out of there"); wait(1); continue
+                    print("You got out of there"); wait(1); pass
     elif cmd == 't':
         if vilFound:
             print("Villagers will trade you one diamond for 4 emeralds or 16 gravel/sand for 1 emerald.")
@@ -431,7 +460,7 @@ while True:
                     else:
                         print("You cannot buy emeralds as you don't have enough sand.")
                         wait(2)
-                        continue
+                        pass
                 elif prompted == 'gravel':
                     if inv['gravel'] >= 16:
                         print('Added one emerald.')
@@ -441,9 +470,9 @@ while True:
                     else:
                         print("You cannot buy emeralds as you don't have enough gravel.")
                         wait(2)
-                        continue
+                        pass
                 else:
-                    print("Invalid Input");wait(1);continue
+                    print("Invalid Input");wait(1);pass
             elif prompt == 'give':
                 if inv['emerald']>=4:
                     conf = input("Confirmation[Y/N]>>> ").lower()
@@ -452,15 +481,15 @@ while True:
                         inv['emerald'] -= 4
                         inv["diamond"] += 1
                     elif conf == 'n':
-                        print("Not Traded"); wait(1); continue
+                        print("Not Traded"); wait(1); pass
                     else:
-                        continue
+                        pass
             else:
-                continue
+                pass
         else:
             print("You need to find a village first. Use the explore command to do so.")
             wait(2)
-            continue
+            pass
     elif cmd == 'i':
         print(f"Crafting Tables: {havCraftingTable}\nSmithing Tables: {havSmithingTable}\n\nLogs: {inv['log']}\nGravel: {inv['gravel']}\n\nEmeralds: {inv['emerald']}\nDiamonds: {inv['diamond']}\nIron: {inv['iron']}\nStone: {inv['stone']}\nNetherite: {inv['netherite']}\n\nFlint: {inv['flint']}\nFlint and Steel: {inv['flintnsteel']}\nBlaze Rods: {inv['blazerods']}\nEnder Pearls: {inv['enderpearls']}\nEyes of Ender: {inv['endereyes']}\n")
         if stoMinable:
@@ -481,11 +510,11 @@ while True:
 
         print(f"Dimension: {val1}\n")
         conf = input("[Y]>>> ").lower()
-        continue
+        pass
     elif cmd == 'a':
         print("Method 1:\nGet Wood\nMake A Crafting Table\nCraft Wood gear\nGet Stone\nMake Stone gear\nGet Iron\nMake Iron gear\nGet Diamonds\nMake Diamond gear\nGet Flint and Steel\nGo to the Nether\nGet netherite\nMake Smithing Table\nGet Netherite gear\n\nMethod 2:\nFind a Village\nFind More Villages to get Emeralds\nTrade Diamonds from them\nGet Wood for a Crafting Table\nMake Diamond gear\nGet Flint and Steel\nGo to the Nether\nGet Netherite\nMake a Smithing Table\nMake Netherite gear\n")
         conf = input("[Y]>>> ").lower()
-        continue
+        pass
     elif cmd == 'f':
         print("Would you like to fight the Elder Guardian, Wither or the Ender Dragon?")
         boss = input("[G/W/D]>>> ").lower()
@@ -495,7 +524,7 @@ while True:
             wait(1)
             print("The chances of beating the guardian are based on your gear. Iron gear has certainity of defeating it.")
             if stoMinable:
-                print("The chances of you dying are extremely high. Are you sure you want to continue?")
+                print("The chances of you dying are extremely high. Are you sure you want to pass?")
                 conf = input("[Y/N]>>> ").lower()
                 if conf == 'y':
                     loading("Fighting The Guardian", 3)
@@ -505,9 +534,9 @@ while True:
                     else:
                         health.kill()
                 else:
-                    continue
+                    pass
             elif iroMinable:
-                print("There is a possibility you will die. Are you sure you want to continue?")
+                print("There is a possibility you will die. Are you sure you want to pass?")
                 conf = input("[Y/N]>>> ").lower()
                 if conf == 'y':
                     loading("Fighting The Guardian", 3)
@@ -517,25 +546,25 @@ while True:
                     else:
                         health.kill()
                 else:
-                    continue
+                    pass
             elif dimMinable:
-                print("It is certain that you will win. Do you want to continue??")
+                print("It is certain that you will win. Do you want to pass??")
                 conf = input("[Y/N]>>> ").lower()
                 if conf == 'y':
                     loading("Fighting The Guardian", 3)
                     print("You defeated the guardian!")
                     guardDef = True
                 else:
-                    continue
+                    pass
             elif netMinable:
-                print("It is certain that you will win. Do you want to continue??")
+                print("It is certain that you will win. Do you want to pass??")
                 conf = input("[Y/N]>>> ").lower()
                 if conf == 'y':
                     loading("Fighting The Guardian", 3)
                     print("You defeated the guardian!")
                     guardDef = True
                 else:
-                    continue 
+                    pass 
             else:
                 print("You need atleast wood gear to attempt to fight a boss.")
         elif boss == 'w':
@@ -544,15 +573,15 @@ while True:
             wait(1)
             print("The chances of beating the wither are based on your gear. Diamond gear has certainity of defeating it.")
             if stoMinable:
-                print("It is certain that you will die. Are you sure you want to continue?")
+                print("It is certain that you will die. Are you sure you want to pass?")
                 conf = input("[Y/N]>>> ").lower()
                 if conf == 'y':
                     loading("Fighting The Wither", 3)
                     health.kill()
                 else:
-                    continue
+                    pass
             elif iroMinable:
-                print("The chances of you dying are extremely high. Are you sure you want to continue?")
+                print("The chances of you dying are extremely high. Are you sure you want to pass?")
                 conf = input("[Y/N]>>> ").lower()
                 if conf == 'y':
                     loading("Fighting The Wither", 3)
@@ -562,9 +591,9 @@ while True:
                     else:
                         health.kill()
                 else:
-                    continue
+                    pass
             elif dimMinable:
-                print("There is a possibility that you will die. Do you want to continue??")
+                print("There is a possibility that you will die. Do you want to pass??")
                 conf = input("[Y/N]>>> ").lower()
                 if conf == 'y':
                     loading("Fighting The Wither", 3)
@@ -574,16 +603,16 @@ while True:
                     else:
                         health.kill()
                 else:
-                    continue
+                    pass
             elif netMinable:
-                print("It is certain that you will win. Do you want to continue??")
+                print("It is certain that you will win. Do you want to pass??")
                 conf = input("[Y/N]>>> ").lower()
                 if conf == 'y':
                     loading("Fighting The Wither", 3)
                     print("You defeated the wither!")
                     witDef = True
                 else:
-                    continue 
+                    pass 
             else:
                 print("You need atleast wood gear to attempt to fight a boss.")
         elif boss == 'd':
@@ -593,23 +622,23 @@ while True:
                 wait(1)
                 print("The chances of beating the wither are based on your gear. Diamond gear has certainity of defeating it.")
                 if stoMinable:
-                    print("It is certain that you will die. Are you sure you want to continue?")
+                    print("It is certain that you will die. Are you sure you want to pass?")
                     conf = input("[Y/N]>>> ").lower()
                     if conf == 'y':
                         loading("Fighting The Dragon", 3)
                         health.kill()
                     else:
-                        continue
+                        pass
                 elif iroMinable:
-                    print("It is certain that you will die. Are you sure you want to continue?")
+                    print("It is certain that you will die. Are you sure you want to pass?")
                     conf = input("[Y/N]>>> ").lower()
                     if conf == 'y':
                         loading("Fighting The Dragon", 3)
                         health.kill()
                     else:
-                        continue
+                        pass
                 elif dimMinable:
-                    print("The chances of you dying are extremely high. Are you sure you want to continue?")
+                    print("The chances of you dying are extremely high. Are you sure you want to pass?")
                     conf = input("[Y/N]>>> ").lower()
                     if conf == 'y':
                         loading("Fighting The Dragon", 3)
@@ -619,9 +648,9 @@ while True:
                         else:
                             health.kill()
                     else:
-                        continue
+                        pass
                 elif netMinable:
-                    print("There is a possibility that you will die. Are you sure you want to continue?")
+                    print("There is a possibility that you will die. Are you sure you want to pass?")
                     conf = input("[Y/N]>>> ").lower()
                     if conf == 'y':
                         loading("Fighting The Dragon", 3)
@@ -631,9 +660,9 @@ while True:
                         else:
                             health.kill()
                     else:
-                        continue
+                        pass
                 elif maxed:
-                    print("There is a possibility that you will die. Are you sure you want to continue?")
+                    print("There is a possibility that you will die. Are you sure you want to pass?")
                     conf = input("[Y/N]>>> ").lower()
                     if conf == 'y':
                         loading("Fighting The Dragon", 3)
@@ -643,7 +672,7 @@ while True:
                         else:
                             health.kill()
                     else:
-                        continue
+                        pass
                 else:
                     print("You need atleast wood gear to fight a boss.")
             else:
@@ -682,4 +711,4 @@ while True:
             netMinable = content.split('\n', 1)[22]
             inNether = content.split('\n', 1)[23]
     else:
-        print("Invalid Input");wait(2);continue
+        print("Invalid Input");wait(2);pass
