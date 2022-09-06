@@ -30,6 +30,17 @@ def loading(msg='null', dur=1):
             wait(1/3)
             clearConsole()
 
+def cheat():
+        c = input("Cheat in what item(to see the items go to the inventory page)>>> ").lower()
+        clearConsole()
+        try:
+            num = int(input("How Much>>> "))
+            inv[c] += num
+            invmsg = c[0].upper()+c[1:]
+            print(f"Got {num} {invmsg}s.");wait(1)
+        except:
+            print("That item isn't there in the game try checking the inventory page to see it's closest match."); wait(2); pass
+
 clearConsole()
 
 class Health:
@@ -376,7 +387,7 @@ cmds = Commands()
 
 while True:
     clearConsole()
-    print("Commands:\nR - Gather Resources\nE - Explore\nC - Craft\nI - Check Inventory\nT - Trade\nN - Go To Nether\nA - Advancement List\nF - Fight\nS - Save and Quit\nL - Load Save\n")
+    print("Commands:\nR - Gather Resources\nE - Explore\nC - Craft\nI - Check Inventory\nT - Trade\nN - Go To Nether\nA - Advancement List\nF - Fight\nS - Save and Quit\nL - Load Save\nH - Cheat\n")
     cmd = input(f"[{biome} | CMD]>>> ").lower()
     clearConsole()
     if cmd == 'r':
@@ -812,5 +823,7 @@ while True:
             stoMinable = content.split('\n', 1)[21]
             netMinable = content.split('\n', 1)[22]
             inNether = content.split('\n', 1)[23]
+    elif cmd == 'h':
+        cheat()
     else:
         print("Invalid Input");wait(2);pass
