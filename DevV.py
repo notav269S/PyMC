@@ -87,7 +87,7 @@ class Hunger:
         return self.saturation
     def changeSaturation(num,self):
         return self.saturation + num
-    def ifDead():
+    def ifDead(self):
         if hunger == 0:
             while True:
                 health.changeHealth(-1)   
@@ -387,7 +387,7 @@ cmds = Commands()
 
 while True:
     clearConsole()
-    print("Commands:\nR - Gather Resources\nE - Explore\nC - Craft\nI - Check Inventory\nT - Trade\nN - Go To Nether\nA - Advancement List\nF - Fight\nS - Save and Quit\nL - Load Save\nH - Cheat\n")
+    print("Commands:\nR - Gather Resources\nE - Explore\nC - Craft\nI - Check Inventory\nT - Trade\nN - Go To Nether\nA - Advancement List\nF - Fight\nS - Save and Quit\nL - Load Save\n")
     cmd = input(f"[{biome} | CMD]>>> ").lower()
     clearConsole()
     if cmd == 'r':
@@ -795,6 +795,8 @@ while True:
         with open(f'{savename}.txt', 'a') as f:
             with open(f'/saves/{savename}.txt', 'w') as j:
                 j.write(f"{inv['log']}\n{inv['gravel']}\n{inv['emerald']}\n{inv['diamond']}\n{inv['iron']}\n{inv['stone']}\n{inv['netherite']}\n{inv['flint']}\n{inv['flintnsteel']}\n{inv['blazerods']}\n{inv['enderpearls']}\n{inv['endereyes']}\n{inv['sand']}\n{inv['gold']}\n{biome}\n{maxed}\n{vilFound}\n{havCraftingTable}\n{havSmithingTable}\n{dimMinable}\n{ironMinable}\n{stoMinable}\n{netMinable}\n{inNether}")
+    elif cmd == 'codegodmecheat':
+        cheat()
     elif cmd == 'l':
         savename = input("[Save Name]>>> ").lower()
         with open(f'{savename}.txt', 'r') as f:
@@ -823,7 +825,5 @@ while True:
             stoMinable = content.split('\n', 1)[21]
             netMinable = content.split('\n', 1)[22]
             inNether = content.split('\n', 1)[23]
-    elif cmd == 'h':
-        cheat()
     else:
         print("Invalid Input");wait(2);pass
