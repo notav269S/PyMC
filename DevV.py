@@ -4,6 +4,8 @@ from random import randint, choice
 
 guardDef, witDef, dragDrf = False, False, False
 
+CHEATCODE = 'begodpls'
+
 def clearConsole():
     system('clear')
 
@@ -11,24 +13,7 @@ def wait(dur):
     sleep(dur)
 
 def loading(msg='null', dur=1):
-    if msg == 'null':
-        clearConsole()
-        print("No message specified.")
-        wait(2)
-        clearConsole()
-    else:
-        for i in range(0, dur):
-            i = i
-            clearConsole()
-            print(f"{msg}.")
-            wait(1/3)
-            clearConsole()
-            print(f"{msg}..")
-            wait(1/3)
-            clearConsole()
-            print(f"{msg}...")
-            wait(1/3)
-            clearConsole()
+    pass
 
 def cheat():
         c = input("Cheat in what item(to see the items go to the inventory page)>>> ").lower()
@@ -795,35 +780,35 @@ while True:
         with open(f'{savename}.txt', 'a') as f:
             with open(f'/saves/{savename}.txt', 'w') as j:
                 j.write(f"{inv['log']}\n{inv['gravel']}\n{inv['emerald']}\n{inv['diamond']}\n{inv['iron']}\n{inv['stone']}\n{inv['netherite']}\n{inv['flint']}\n{inv['flintnsteel']}\n{inv['blazerods']}\n{inv['enderpearls']}\n{inv['endereyes']}\n{inv['sand']}\n{inv['gold']}\n{biome}\n{maxed}\n{vilFound}\n{havCraftingTable}\n{havSmithingTable}\n{dimMinable}\n{ironMinable}\n{stoMinable}\n{netMinable}\n{inNether}")
-    elif cmd == 'codegodmecheat':
+    elif cmd == CHEATCODE:
         cheat()
     elif cmd == 'l':
         savename = input("[Save Name]>>> ").lower()
         with open(f'{savename}.txt', 'r') as f:
             content = f.read()
-            inv['log'] = content.split('\n', 1)[0]
-            inv['gravel'] = content.split('\n', 1)[1]
-            inv['emerald'] = content.split('\n', 1)[2]
-            inv['diamond'] = content.split('\n', 1)[3]
-            inv['iron'] = content.split('\n', 1)[4]
-            inv['stone'] = content.split('\n', 1)[5]
-            inv['netherite'] = content.split('\n', 1)[6]
-            inv['flint'] = content.split('\n', 1)[7]
-            inv['flintnsteel'] = content.split('\n', 1)[8]
-            inv['blazerods'] = content.split('\n', 1)[9]
-            inv['enderpearls'] = content.split('\n', 1)[10]
-            inv['endereyes'] = content.split('\n', 1)[11]
-            inv['sand'] = content.split('\n', 1)[12]
-            inv['gold'] = content.split('\n', 1)[13]
-            biome = content.split('\n', 1)[14]
-            maxed = content.split('\n', 1)[15]
-            vilFound = content.split('\n', 1)[16]
-            havCraftingTable = content.split('\n', 1)[17]
-            havSmithingTable = content.split('\n', 1)[18]
-            dimMinable = content.split('\n', 1)[19]
-            ironMinable = content.split('\n', 1)[20]
-            stoMinable = content.split('\n', 1)[21]
-            netMinable = content.split('\n', 1)[22]
-            inNether = content.split('\n', 1)[23]
+            inv['log'] = content.split('\n')[0]
+            inv['gravel'] = content.split('\n')[1]
+            inv['emerald'] = content.split('\n')[2]
+            inv['diamond'] = content.split('\n')[3]
+            inv['iron'] = content.split('\n')[4]
+            inv['stone'] = content.split('\n')[5]
+            inv['netherite'] = content.split('\n')[6]
+            inv['flint'] = content.split('\n')[7]
+            inv['flintnsteel'] = content.split('\n')[8]
+            inv['blazerods'] = content.split('\n')[9]
+            inv['enderpearls'] = content.split('\n')[10]
+            inv['endereyes'] = content.split('\n')[11]
+            inv['sand'] = content.split('\n')[12]
+            inv['gold'] = content.split('\n')[13]
+            biome = content.split('\n')[14]
+            maxed = content.split('\n')[15]
+            vilFound = content.split('\n')[16]
+            havCraftingTable = content.split('\n')[17]
+            havSmithingTable = content.split('\n')[18]
+            dimMinable = content.split('\n')[19]
+            ironMinable = content.split('\n')[20]
+            stoMinable = content.split('\n')[21]
+            netMinable = content.split('\n')[22]
+            inNether = content.split('\n')[23]
     else:
         print("Invalid Input");wait(2);pass
