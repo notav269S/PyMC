@@ -13,7 +13,8 @@ def wait(dur):
     sleep(dur)
 
 def loading(msg='null', dur=1):
-    pass
+    print(msg)
+    wait(1)
 
 def cheat():
         c = input("Cheat in what item(to see the items go to the inventory page)>>> ").lower()
@@ -778,7 +779,7 @@ while True:
     elif cmd == 's':
         savename = input("[Save Name]>>> ").lower()
         with open(f'{savename}.txt', 'a') as f:
-            with open(f'/saves/{savename}.txt', 'w') as j:
+            with open(f'{savename}.txt', 'w') as j:
                 j.write(f"{inv['log']}\n{inv['gravel']}\n{inv['emerald']}\n{inv['diamond']}\n{inv['iron']}\n{inv['stone']}\n{inv['netherite']}\n{inv['flint']}\n{inv['flintnsteel']}\n{inv['blazerods']}\n{inv['enderpearls']}\n{inv['endereyes']}\n{inv['sand']}\n{inv['gold']}\n{biome}\n{maxed}\n{vilFound}\n{havCraftingTable}\n{havSmithingTable}\n{dimMinable}\n{ironMinable}\n{stoMinable}\n{netMinable}\n{inNether}")
     elif cmd == CHEATCODE:
         cheat()
